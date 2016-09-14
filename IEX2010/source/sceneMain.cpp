@@ -69,6 +69,8 @@ void	sceneMain::Update()
 	vec.w = 4;
 	vec *= 20;
 
+	VECTOR<int, 4> a = vec;
+
 
 
 }
