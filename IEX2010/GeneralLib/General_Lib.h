@@ -3,6 +3,7 @@
 #define USE_IEX
 
 //#define USE_NL
+#include "Vector_Template.h"
 
 #ifdef USE_IEX
 
@@ -32,26 +33,26 @@ namespace GeneralLib
 //	};
 //#include"Vector_Template.h"
 //
-	template<typename T>
-	struct BaseVector
-	{
-	protected:
-		BYTE* val;
-		BaseVector(int SumArray)
-		{
-			val = new BYTE[sizeof(T) * SumArray];
-		}
-		T& GetVal(int index)
-		{
-			return (T&)val[sizeof(T) * index];
-		}
-	};
+	//template<typename T>
+	//struct BaseVector
+	//{
+	//protected:
+	//	BYTE* val;
+	//	BaseVector(int SumArray)
+	//	{
+	//		val = new BYTE[sizeof(T) * SumArray];
+	//	}
+	//	T& GetVal(int index)
+	//	{
+	//		return (T&)val[sizeof(T) * index];
+	//	}
+	//};
 
-	class VectorX<>
-	{
-	public:
-		__declspec(property(get = getX, put = putX)) x;
-	};
+	//class VectorX<>
+	//{
+	//public:
+	//	__declspec(property(get = getX, put = putX)) x;
+	//};
 	//3Dƒ‚ƒfƒ‹
 	class Model3D
 	{

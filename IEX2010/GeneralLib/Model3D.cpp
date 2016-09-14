@@ -1,5 +1,6 @@
 #include "General_Lib.h"
 
+using namespace GeneralLib;
 
 #ifdef USE_IEX
 	Model3D::Model3D(char * filename)

@@ -1,11 +1,10 @@
 #include "General_Lib.h"
 
-
+using namespace GeneralLib;
 #ifdef USE_IEX
 
 SkinMeshModel3D::SkinMeshModel3D(char * filename)
 {
-
 }
 
 

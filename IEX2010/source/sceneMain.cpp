@@ -1,5 +1,6 @@
 #include	"iextreme.h"
 #include	"system/system.h"
+#include	"General_Lib.h"
 
 #include	"sceneMain.h"
 
@@ -61,6 +62,12 @@ sceneMain::~sceneMain()
 
 void	sceneMain::Update()
 {
+	VECTOR<int, 4> vec;
+	vec.x = 1;
+	vec.y = 2;
+	vec.z = 3;
+	vec.w = 4;
+	vec *= 20;
 
 
 
