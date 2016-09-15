@@ -92,8 +92,6 @@ public:
 	void mul(T& val) { /*VECTOR<T, I>::mul(val); */};
 	template<typename First , typename... Vals>
 	VECTORBASE(First& first, Vals&... val){};
-	template<typename DifType, size_t DifMax>
-	inline void Assign(VECTORBASE<DifType, DifMax, Num>& v){};
 	VECTORBASE(){};
 };
 
@@ -101,16 +99,25 @@ template<typename T, size_t Max>
 class VECTOR :public VECTORBASE<T, Max,1>
 {
 public:
-	//初期化は数字の順番を入れ替えてポインタで処理？
 	VECTOR(){};
-	template< typename... Vals>
-	VECTOR(Vals... val) :VECTORBASE<T, Max, 1>(val...){};
+	#define Vector_Assign \
+	for (size_t i = 0; i < Max && i < DifMax; i++)\
+	{\
+		(&x)[-i] = (&v.x)[-i];\
+	}
 	template<typename DifType,size_t DifMax>
-	void Assign (VECTOR<DifType, DifMax>& v){ VECTORBASE<T, Max, 1>::Assign(v);  }
+	inline VECTOR& operator = (const VECTOR<DifType, DifMax>& v)
+	{
+		Vector_Assign
+		return *this;
+	}
 	template<typename DifType, size_t DifMax>
-	inline VECTOR& operator = (VECTOR<DifType, DifMax>& v){ VECTORBASE<T, Max, 1>::Assign(v); return *this; }
-	template<typename DifType, size_t DifMax>
-	VECTOR (VECTOR<DifType, DifMax>& v){ VECTORBASE<T, Max, 1>::Assign(v); }
+	inline VECTOR (VECTOR<DifType, DifMax>& v)
+	{
+		Vector_Assign
+	}
+	template< typename... Vals>
+	inline VECTOR(Vals... val) :VECTORBASE<T, Max, 1>(val...){};
 	inline VECTOR& operator *= (T val)
 	{
 		for (size_t i = 0; i < Max; i++)
@@ -119,21 +126,146 @@ public:
 		}
 		return *this;
 	}
-	inline void mul (T val)
+
+	inline VECTOR operator * (T val)
 	{
-		T* data = &x;
+		VECTOR tmp(*this);
 		for (size_t i = 0; i < Max; i++)
 		{
-			data[-i] *= val;
+			(&tmp.x)[-i] *= val;
 		}
+		return tmp;
+	}
+	inline VECTOR& operator /= (T val)
+	{
+		for (size_t i = 0; i < Max; i++)
+		{
+			(&x)[-i] /= val;
+		}
+		return *this;
+	}
+
+	inline VECTOR operator / (T val)
+	{
+		VECTOR tmp(*this);
+		for (size_t i = 0; i < Max; i++)
+		{
+			(&tmp.x)[-i] /= val;
+		}
+		return tmp;
 	}
 	template<typename DifType, size_t DifMax>
-	inline void Assign2(VECTOR<DifType, DifMax>& v)
+	inline VECTOR operator + (const VECTOR<DifType, DifMax>& v)
+	{
+		VECTOR tmp(*this);
+		for (size_t i = 0; i < Max && i < DifMax; i++)
+		{
+			(&tmp.x)[-i] += (T)(&v.x)[-i];
+		}
+		return tmp;
+	}
+
+	template<typename DifType, size_t DifMax>
+	inline VECTOR& operator += (const VECTOR<DifType, DifMax>& v)
 	{
 		for (size_t i = 0; i < Max && i < DifMax; i++)
 		{
-			(&x)[-i] = (&v.x)[-i];
+			(&x)[-i] += (T)(&v.x)[-i];
 		}
+		return *this;
+	}
+
+	template<typename DifType, size_t DifMax>
+	inline VECTOR operator - (const VECTOR<DifType, DifMax>& v)
+	{
+		VECTOR tmp(*this);
+		for (size_t i = 0; i < Max && i < DifMax; i++)
+		{
+			(&tmp.x)[-i] -= (T)(&v.x)[-i];
+		}
+		return tmp;
+	}
+
+	template<typename DifType, size_t DifMax>
+	inline VECTOR& operator -= (const VECTOR<DifType, DifMax>& v)
+	{
+		for (size_t i = 0; i < Max && i < DifMax; i++)
+		{
+			(&x)[-i] -= (T)(&v.x)[-i];
+		}
+		return *this;
+	}
+
+	inline float Lengthf()
+	{
+		float tmp = .0f;
+		for (size_t i = 0; i < Max; i++)
+		{
+			tmp += (float)(&x)[-i] * (float)(&x)[-i];
+		}
+		return sqrtf(tmp);
+	}
+
+	inline double Lengthd()
+	{
+		double tmp = 0.0;
+		for (size_t i = 0; i < Max; i++)
+		{
+			tmp += (double)(&x)[-i] * (double)(&x)[-i];
+		}
+		return sqrt(tmp);
+	}
+
+	inline T LengthSq()
+	{
+		T tmp = ( T)0;
+		for (size_t i = 0; i < Max; i++)
+		{
+			tmp += (&x)[-i] * (&x)[-i];
+		}
+		return tmp;
+	}
+	
+	void Normalize()
+	{
+		T l = Lengthf();
+		if (l != 0)
+			for (size_t i = 0; i < Max; i++)
+			{
+				(&x)[-i] /= l;
+			}
+	}
+	VECTOR Normalized()
+	{
+		VECTOR tmp(*this);
+		T l = Length<T>();
+		if (l != 0)
+			for (size_t i = 0; i < Max; i++)
+			{
+				(&tmp.x)[-i] /= l;
+			}
+		return tmp;
+	}
+
+	bool operator ==(const VECTOR<T,Max>& v)
+	{
+		for (size_t i = 0; i < Max ; i++)
+		{
+			if ((&x)[-i] != (&v.x)[-i])
+				return false;
+		}
+		return true;
+	}
+
+
+	bool operator !=(const VECTOR<T, Max>& v)
+	{
+		for (size_t i = 0; i < Max; i++)
+		{
+			if ((&x)[-i] != (&v.x)[-i])
+				return true;
+		}
+		return false;
 	}
 
 };
@@ -153,31 +285,36 @@ public:\
 	T ValName;\
 	VECTORBASE<T,Max, num>():ValName((T)0){};\
 	template<typename First,typename... Vals>\
-	VECTORBASE<T,Max, num>(First& first, Vals&... val):VECTORBASE<T,Max, num + 1>(val...),ValName((T)first){};\
-	inline void mul(T& val){ValName *= val; VECTORBASE<T,Max, num + 1>::mul(val);}\
-	template<typename DifType,size_t DifMax>\
-	inline void Assign (VECTORBASE<DifType, DifMax , num>& v){ValName = (T)v.ValName; VECTORBASE<T, Max, num + 1>::Assign(v); }\
+	inline VECTORBASE<T,Max, num>(First& first, Vals&... val):VECTORBASE<T,Max, num + 1>(val...),ValName((T)first){};\
 };
 
 #define makeStopperVectorClass(num) template<typename T>\
 class VECTORBASE<T, num, num + 1>\
 {\
 public:\
-	inline void mul(T& val) {};\
 	VECTORBASE<T, num, num + 1>(){};\
-	template<typename DifType,size_t DifMax>\
-	inline void Assign (const VECTORBASE<DifType, DifMax , num>& v){};\
 };
 makeStopperVectorClass(1)
 makeStopperVectorClass(2)
 makeStopperVectorClass(3)
 makeStopperVectorClass(4)
 
-
 makeVectorClass(4, w)
 makeVectorClass(3, z)
 makeVectorClass(2, y)
 makeVectorClass(1, x)
 
+typedef VECTOR<int, 1> Vector1i;
+typedef VECTOR<int, 2> Vector2i;
+typedef VECTOR<int, 3> Vector3i;
+typedef VECTOR<int, 4> Vector4i;
+typedef VECTOR<float, 1> Vector1f;
+typedef VECTOR<float, 2> Vector2f;
+typedef VECTOR<float, 3> Vector3f;
+typedef VECTOR<float, 4> Vector4f;
+typedef VECTOR<double, 1> Vector1d;
+typedef VECTOR<double, 2> Vector2d;
+typedef VECTOR<double, 3> Vector3d;
+typedef VECTOR<double, 4> Vector4d;
 #endif
 #endif
