@@ -62,15 +62,29 @@ sceneMain::~sceneMain()
 
 void	sceneMain::Update()
 {
-	VECTOR<int, 4> vec;
+	VECTOR<int, 4> vec(2.0,3,1,100);
+	VECTOR<double, 2> vec2(vec);
+	vec2.Assign(vec);
 	vec.x = 1;
 	vec.y = 2;
 	vec.z = 3;
-	vec.w = 4;
 	vec *= 20;
+	vec2.Assign2(vec);
+	for (size_t i = 0; i < 100000000; i++)
+	{
+		vec2=vec;
+	}
+	for (size_t i = 0; i < 100000000; i++)
+	{
+		vec2.Assign2(vec);
+	}
+	//vec = vec * 100;
+	vec.z = 0;
+	//VECTOR<int, 3> a = vec;
 
-	VECTOR<int, 4> a = vec;
+	//VECTOR<float, 3> fv(200.0f,300.0f,133.33f);
 
+	//fv = a;
 
 
 }
