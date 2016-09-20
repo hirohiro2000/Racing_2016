@@ -81,10 +81,10 @@
     <ClCompile Include="IEX\IEX_View.cpp">
       <Filter>IEX</Filter>
     </ClCompile>
-    <ClCompile Include="GeneralLib\Model3D.cpp">
+    <ClCompile Include="GeneralLib\SkinMeshModel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GeneralLib\SkinMeshModel.cpp">
+    <ClCompile Include="source\Player_Car.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -108,6 +108,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GeneralLib\General_Lib.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralLib\Vector_Template.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralLib\Transform.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

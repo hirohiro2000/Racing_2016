@@ -1,9 +1,10 @@
 #pragma once
+#include "Vector_Template.h"
 //TODO: 汎用的なライブラリを作成中だが、目的は挙動の確認なので、スキンメッシュは今要らない（実装において考慮する必要はない）
 #define USE_IEX
 
 //#define USE_NL
-#include "Vector_Template.h"
+
 
 #ifdef USE_IEX
 
@@ -18,81 +19,49 @@
 
 namespace GeneralLib
 {
-//	//Tはデータ型専用
-//	template<typename T,int I>
-//	struct Vector
-//	{
-//	private:
-//		BYTE val[sizeof(T) * I];
-//	public:
-//		property T x()
-//		{
-//			get()
-//
-//		}
-//	};
-//#include"Vector_Template.h"
-//
-	//template<typename T>
-	//struct BaseVector
-	//{
-	//protected:
-	//	BYTE* val;
-	//	BaseVector(int SumArray)
-	//	{
-	//		val = new BYTE[sizeof(T) * SumArray];
-	//	}
-	//	T& GetVal(int index)
-	//	{
-	//		return (T&)val[sizeof(T) * index];
-	//	}
-	//};
 
-	//class VectorX<>
-	//{
-	//public:
-	//	__declspec(property(get = getX, put = putX)) x;
-	//};
-	//3Dモデル
-	class Model3D
-	{
-	#ifdef USE_IEX
-	protected:
-		iexMesh* model;
-	#else
-	#ifdef USE_NL
+//3Dモデル
+#ifdef USE_IEX
 
+	typedef iexMesh Model3D;
 
-	#endif
-	#endif 
-	public:
-		Model3D(char* filename);
-		Model3D(){};
-		void Update();//行列の更新
-		void Render();
+#else
+#ifdef USE_NL
 
-	};
+#endif
+#endif
 
+//3Dスキンメッシュモデル
+#ifdef USE_IEX
 
-	//3Dスキンメッシュモデル
-	class SkinMeshModel3D :public Model3D
-	{
-	#ifdef USE_IEX
-	private:
-		iex3DObj* skinMeshModel;
-	#else
-	#ifdef USE_NL
+	typedef iex3DObj SkinMeshModel3D;
 
+#else
+#ifdef USE_NL
 
-	#endif
-	#endif 
-	public:
-		SkinMeshModel3D(char* filename);
-		void Update();
+#endif
+#endif
 
+//テクスチャ
+#ifdef USE_IEX
 
+	typedef iex2DObj Texture;
 
+#else
+#ifdef USE_NL
 
+#endif
+#endif
 
-	};
+//カメラ
+#ifdef USE_IEX
+
+	typedef iexView Camera;
+
+#else
+#ifdef USE_NL
+
+#endif
+#endif
+
 }

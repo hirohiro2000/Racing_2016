@@ -10,10 +10,11 @@ private:
 
 	//•`‰æ•”•ª
 	Model3D* bodyModel;
+	Model3D* tireModel;
 	
 	
 	//ˆÊ’uî•ñ
-
+	Vector3f pos;
 	
 	//‘¬“xî•ñ
 

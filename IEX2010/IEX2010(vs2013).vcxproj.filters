@@ -84,6 +84,9 @@
     <ClCompile Include="IEX\IEX_View.cpp">
       <Filter>IEX</Filter>
     </ClCompile>
+    <ClCompile Include="Newton\FBXImpotData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -100,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="IEX\iextreme.h">
       <Filter>IEX</Filter>
+    </ClInclude>
+    <ClInclude Include="Newton\FBXImportData.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

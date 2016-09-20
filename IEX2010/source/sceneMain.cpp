@@ -1,16 +1,15 @@
-#include	"iextreme.h"
 #include	"system/system.h"
 #include	"General_Lib.h"
 
 #include	"sceneMain.h"
-
+using namespace GeneralLib;
 //*****************************************************************************************************************************
 //
 //	グローバル変数
 //
 //*****************************************************************************************************************************
 //	カメラ用
-iexView*	view;
+Camera*	view;
 
 //	ステージ用
 
@@ -26,16 +25,17 @@ iexView*	view;
 
 bool sceneMain::Initialize()
 {
+#ifdef USE_IEX
 	//	環境設定
 	iexLight::SetFog( 800, 1000, 0 );
-
+#endif
 
 	//	環境光
 
 
 
 	//	カメラ設定
-	view = new iexView();
+	view = new Camera();
 
 	//	ステージ
 
@@ -63,7 +63,7 @@ sceneMain::~sceneMain()
 void	sceneMain::Update()
 {
 	Vector4f vec(2.0,3,1,100);
-	Vector3f vec2(vec);
+	Vector2f vec2(vec);
 	vec.x = 1;
 	vec.y = 2;
 	vec.z = 3;
