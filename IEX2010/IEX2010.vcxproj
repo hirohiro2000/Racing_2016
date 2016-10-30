@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneralLib\General_Lib.h" />
+    <ClInclude Include="GeneralLib\Quaternion.h" />
     <ClInclude Include="GeneralLib\Transform.h" />
     <ClInclude Include="GeneralLib\Vector_Template.h" />
     <ClInclude Include="source\Player_Car.h" />
